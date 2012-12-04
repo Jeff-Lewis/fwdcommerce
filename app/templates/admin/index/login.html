@@ -19,8 +19,8 @@
 
 {else}
 
-	{* First time load, bootstrap? *}
-	{if !get("/accounts")}
+	{* First admin? *}
+	{if !get("/accounts", [roles => "admin"])}
 		{redirect "/bootstrap"}
 	{/if}
 
