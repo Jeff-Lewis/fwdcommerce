@@ -1,7 +1,7 @@
 {extend "admin" requires_login=false}
 
 {* Already have an account? *}
-{if get("/accounts")}
+{if get("/accounts", [roles => "admin"])}
 	{redirect "/login"}
 {/if}
 	
