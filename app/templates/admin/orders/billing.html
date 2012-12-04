@@ -125,8 +125,7 @@
 {if $payment_settings.card.gateway == stripe}
 
 	{* Get publishable key from payment settings *}
-	{$publishable_key = $payment_settings.stripe.publishable_key|default:
-		$payment_settings.card.publishable_key}
+	{$publishable_key = $payment_settings.card.publishable_key}
 	
 	<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
 	<script type="text/javascript">

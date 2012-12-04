@@ -90,8 +90,7 @@
 {if $payment_settings.card.gateway == stripe}
 
 	{* Get publishable key from payment settings *}
-	{$publishable_key = $payment_settings.stripe.publishable_key|default:
-		$payment_settings.card.publishable_key}
+	{$publishable_key = $payment_settings.card.publishable_key}
 
 	<script type="text/javascript" src="https://js.stripe.com/v1/"></script>
 	<script type="text/javascript">
@@ -154,41 +153,49 @@
 				{
 					$form.trigger('loading');
 					
-					// Get stripe.
-					Stripe.createToken(card, function (status, response)
+					try {
+						// Get stripe.
+						Stripe.createToken(card, function (status, response)
+						{
+							// Error from stripe?
+							if (response.error)
+							{
+								$form.data('stripe-card', null);
+								
+								$form.find('input.cardnum').trigger('error', ['('+response.error.message+')']).focus();
+								
+								$form.trigger('loading_done');
+							}
+							// Validated token!
+							else
+							{
+								// Remember good card values.
+								$form.data('stripe-card', $.param(card));
+								
+								// Separate stripe token from card object.
+								var billing_card = response.card;
+								
+								response.card = null;
+								var billing_stripe = response;
+								
+								// Save response data and re-submit.
+								$form.data('order', 
+									$.param({ order: { billing: {
+										stripe: billing_stripe, card: billing_card
+									}}})
+								);
+								
+								// Trigger form submit again.
+								$form.trigger('loading_done');
+								$form.trigger('submit');
+							}
+						});
+					}
+					catch (err)
 					{
-						// Error from stripe?
-						if (response.error)
-						{
-							$form.data('stripe-card', null);
-							
-							$form.find('input.cardnum').trigger('error', ['('+response.error.message+')']).focus();
-							
-							$form.trigger('loading_done');
-						}
-						// Validated token!
-						else
-						{
-							// Remember good card values.
-							$form.data('stripe-card', $.param(card));
-							
-							// Separate stripe token from card object.
-							var billing_card = response.card;
-							response.card = null;
-							var billing_stripe = response;
-							
-							// Save response data and re-submit.
-							$form.data('order', 
-								$.param({ order: { billing: {
-									stripe: billing_stripe, card: billing_card
-								}}})
-							);
-							
-							// Trigger form submit again.
-							$form.trigger('loading_done');
-							$form.trigger('submit');
-						}
-					});
+						$form.find('input.cardnum').trigger('error', ['('+err+')']);
+						$form.trigger('loading_done');
+					}
 				}
 			}
 			
