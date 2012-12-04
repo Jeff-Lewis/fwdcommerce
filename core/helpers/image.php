@@ -26,7 +26,7 @@
  */
 function image ($params)
 {
-    $config = Request::$config;
+	$config = Request::$config;
 
 	// images/[type]/[id]_[name]_[width]_[height]_[padding].[ext]
 	// images/products/12_default.jpg
@@ -94,9 +94,9 @@ function image ($params)
 	$not_exists = (!file_exists($file) && !$not_orig);
 	$not_fresh = (!$not_exists && !$not_orig && filectime($orig_file) > filectime($file));
 
-    // Need to resize?
-    if (($not_exists || $not_fresh) && ($width || $height))
-    {
+	// Need to resize?
+	if (($not_exists || $not_fresh) && ($width || $height))
+	{
 		// Create new image from source.
 		$size = getimagesize($orig_file);
 		switch ($size['mime'])
@@ -125,14 +125,14 @@ function image ($params)
 		// Proportional width or height?
 		if (!$width)
 		{
-            $width = $src_width * ($height / $src_height);
+			$width = $src_width * ($height / $src_height);
 		}
 		else if (!$height)
 		{
-            $height = $src_height * ($width / $src_width);
+			$height = $src_height * ($width / $src_width);
 		}
 
-        // Reference width/height as dest.
+		// Reference width/height as dest.
 		$dest_width = $width;
 		$dest_height = $height;
 
@@ -189,23 +189,17 @@ function image ($params)
 
 		// Resample the image to a new size.
 		imagecopyresampled($dest_image, $src_image, $dest_x, $dest_y, 0, 0, $new_width, $new_height, $src_width, $src_height);
-
-		// Write the image to the correct path.
-		if ($r = imagejpeg($dest_image, $file, '100'))
+		
+		if (is_writeable(dirname($file)))
 		{
-			// Need to log error?
+			// Write the image to the correct path.
+			imagejpeg($dest_image, $file, '100');
 		}
-    }
+		else
+		{
+			throw new Exception("Unable to save image in ".str_replace('//', '/', dirname($file))."/ (permission denied)");
+		}
+	}
 
 	return $url;
-}
-
-/**
-* Return a list of images.
-*/
-function images ($params)
-{
-	// {foreach $product|images as $image}
-
-	// @TODO: Make it happen.
 }
