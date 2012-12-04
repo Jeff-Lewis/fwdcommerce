@@ -24,7 +24,7 @@ class MongoDatabase extends Database
 		'pass' => null,
 		'host' => 'localhost',
 		'port' => '27017',
-		'database' => null,
+		'database' => 'default',
 		'debug' => false
 	);
 
@@ -112,6 +112,9 @@ class MongoDatabase extends Database
 			$host = $this->params['host'] ?: 'localhost';
 			$port = $this->params['port'] ?: 27017;
 			$options = $this->params['options'] ?: array();
+			
+			// Default database name.
+			$this->database = $this->database ?: 'default';
 			
 			// Username and password?
 			if ($this->params['user'] && $this->params['pass'])
