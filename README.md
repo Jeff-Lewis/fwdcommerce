@@ -1,6 +1,8 @@
-# Forward - The platform for custom e-commerce
+# Forward: The platform for custom e-commerce
 
-#### Requirements
+A full-featured, developer centric e-commerce platform that makes custom code easy, with powerful templates & expressive syntax.
+
+### Requirements
 
 * PHP 5.3+
 * MongoDB 2.0+
