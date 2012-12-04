@@ -1,0 +1,39 @@
+# App config
+app:
+  debug: true
+
+# Database config
+mongo:
+  user: 
+  pass: 
+  host: 
+  port: 
+  database: 
+  options:
+  #  replicaSet: rs0
+
+# Cache config
+cache:
+  enabled: false
+  backend: memcache
+  host: localhost
+  port: 11211
+
+# Session config
+session:
+  use_cache: false
+
+#
+# Override app settings for local environment
+#
+#   For example:
+#
+#     settings:
+#       payments:
+#         card:
+#           gateway: stripe
+#           secret_key: ...
+#           publishable_key: ...
+#
+settings:
+
