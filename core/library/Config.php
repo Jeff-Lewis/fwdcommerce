@@ -70,11 +70,11 @@ class Config extends ArrayInterface
     	{
 	    	foreach ($array2 as $key => &$value)
 	    	{
-	    		if (is_array($value) && isset($merged[$key]) && is_array($merged[$key]))
+	    		if (is_array($value) && is_array($merged[$key]))
 	    		{
 	    			$merged[$key] = self::merge($merged[$key], $value);
 	    		}
-	    		else
+	    		elseif (isset($value) && !is_array($merged[$key]))
 	    		{
 	    			$merged[$key] = $value;
 	    		}
