@@ -199,7 +199,8 @@ class View
 		
 		// Determine result from view.
 		$result = $result ?: $GLOBALS['__view_result'];
-		
+		unset($GLOBALS['__view_result']);
+
 		// Trigger after:render event, return result.
 		return trigger('view', 'after:render', $result, $this);
 	}
