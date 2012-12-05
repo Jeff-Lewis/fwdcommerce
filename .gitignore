@@ -9,3 +9,17 @@
 /public/images/entries/*
 !README.md
 !.gitignore
+
+# Common
+.DS_Store
+.cache
+.project
+.settings
+.git
+.svn
+.cvs
+*.tmp
+*.swp
+*.bak
+temp
+tmp
