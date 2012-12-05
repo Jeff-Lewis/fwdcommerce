@@ -1,14 +1,12 @@
 #
 # This is a local environment config file.
-# It's generally used to override config options in app.yml
+# Its purpose is to override config options in app.yml
 # with settings specific to this application environment -- 
 # (i.e. dev, test, production).
 #
 # If you prefer to use a single config file, feel free
 # move these options to app.yml and remove this.
 #
-
-# App config
 app:
   debug: true
 
