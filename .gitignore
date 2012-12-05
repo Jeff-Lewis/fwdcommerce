@@ -1,16 +1,3 @@
-/logs/*
-/config/.env
-/config/local.yml
-/core/library/smarty/compile/*
-/core/library/smarty/cache/*
-/public/uploads/*
-/public/images/products/*
-/public/images/categories/*
-/public/images/entries/*
-!README.md
-!.gitignore
-
-# Common
 .DS_Store
 .cache
 .project
