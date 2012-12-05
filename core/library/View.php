@@ -36,10 +36,15 @@ class View
 				require(APP_ROOT.'core/library/smarty/libs/Smarty.class.php');
 			}
 			
+			// Ensure compile dir exists.
+			if (!is_dir(APP_ROOT.'core/cache/compile/'))
+			{
+				mkdir(APP_ROOT.'core/cache/compile/', 0777);
+			}
+			
 			self::$smarty = new Smarty;
-			self::$smarty->setTemplateDir(APP_ROOT.'app/layouts/');
-			self::$smarty->setCompileDir(APP_ROOT.'core/library/smarty/compile/');
-			self::$smarty->setCacheDir(APP_ROOT.'core/library/smarty/cache/');
+			self::$smarty->setCacheDir(APP_ROOT.'core/cache/');
+			self::$smarty->setCompileDir(APP_ROOT.'core/cache/compile/');
 			self::$smarty->setConfigDir(APP_ROOT.'core/library/smarty/config/');
 			self::$smarty->force_compile = Request::$config->smarty['force_compile'] ? true : false;
 			self::$smarty->caching = Request::$config->smarty['caching'] ? true : false;
