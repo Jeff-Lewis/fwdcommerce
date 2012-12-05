@@ -51,7 +51,7 @@ class Controller {
 		}
 
 		// Wrap get and post into params.
-		$this->params = $this->params ?: new ArrayInterface(array_merge((array)$_GET, (array)$_POST));
+		$this->params = $this->params ?: new ArrayInterface(array_merge((array)$_POST, (array)$_GET));
 		
 		// Attach files to params.
 		$this->params['_files'] = $_FILES;
