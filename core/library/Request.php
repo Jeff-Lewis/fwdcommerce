@@ -86,23 +86,25 @@ class Request extends ArrayInterface
 		// Setup autoloader.
 		spl_autoload_register(array('Request', 'autoload'));
 		
-		// Get current environment.
-		if (!self::$env = trim(file_get_contents(APP_ROOT.'config/.env')))
+		// Load app config.
+		self::$config = new Config('app');
+		$config =& self::$config;
+		
+		// Get current environment (default local).
+		self::$env = is_file(APP_ROOT.'config/.env')
+			? trim(file_get_contents(APP_ROOT.'config/.env'))
+			: 'local';
+		
+		// Load environment config.
+		if (is_file(APP_ROOT.'config/'.self::$env.'.yml'))
 		{
-			throw new Exception('Set current environment in config/.env');
+			self::$env_config = new Config(self::$env);
+			$env_config =& self::$env_config;
+		
+			// Merge environment config into app config.
+			$config = Config::merge($config, $env_config);
 		}
 		
-		// Load app and environment configs.
-		self::$config = new Config('app');
-		self::$env_config = new Config(self::$env);
-		
-		// Local config references.
-		$config =& self::$config;
-		$env_config =& self::$env_config;
-		
-		// Merge environment config into app config.
-		$config = Config::merge($config, $env_config);
-
 		// Setup app defaults.
 		$default_app_config = array(
 			'view_path' => APP_ROOT.'app/templates/',
@@ -673,7 +675,7 @@ class Request extends ArrayInterface
 		header('HTTP/1.1 500 Internal Server Error');
 		
 		// Check if App is set to display errors or not.
-		if (self::$config && self::$env_config && !self::$config->app['debug'])
+		if (self::$config && !self::$config->app['debug'])
 		{
 			exit;
 		}

@@ -1,4 +1,12 @@
 #
+# This is an application config file.
+# It defines default application config options,
+# which may be overriden by a local environment config file.
+#
+app:
+  debug: false
+
+#
 # Map domains to templates.
 #   Format:
 #      domain_routes:
