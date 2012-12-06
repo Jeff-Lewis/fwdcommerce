@@ -9,80 +9,80 @@
  */
 class Config extends ArrayInterface
 {
-    function __construct ($path = null, $required = true, $refresh = false)
-    {
+	function __construct ($path = null, $required = true, $refresh = false)
+	{
 		if ($path)
 		{
 			parent::__construct((array)self::load($path, $required = true, $refresh));
 		}
-    }
+	}
 
-    /**
-     * Load a directory of config files (YAML) into this static object.
-     */
-    static function load ($path, $required = true, $refresh = false)
-    {
-    	static $__spyc, $__cache;
-    	
+	/**
+	 * Load a directory of config files (YAML) into this static object.
+	 */
+	static function load ($path, $required = true, $refresh = false)
+	{
+		static $__spyc, $__cache;
+		
 		if ($path[0] !== '/')
 		{
 			$path = APP_ROOT."config/{$path}.yml";
 		}
 
-        if (!is_file($path))
-        {
-        	if ($required)
-        	{
-        		throw new Exception("Config file not found at {$path}");
-        	}
-        	else
-        	{
-            	return null;
-            }
-        }
-    	
-    	if (!$__spyc)
-    	{
-    		$__spyc = new Spyc();
-    	}
-    	
+		if (!is_file($path))
+		{
+			if ($required)
+			{
+				throw new Exception("Config file not found at {$path}");
+			}
+			else
+			{
+				return null;
+			}
+		}
+		
+		if (!$__spyc)
+		{
+			$__spyc = new Spyc();
+		}
+		
 		$yml = (!$refresh && $__cache[$path])
 			? $__cache[$path]
 			: $__spyc->loadFile($path);
 		
 		$__cache[$path] = $yml;
 
-        return $yml;
-    }
-    
-    /**
-     * Merge config arrays recursively using distinct keys.
-     *
-     * @param {array} $config1 Array to start with
-     * @param {array} $config2 Array to merge with
-     * @return {array} Config combined
-     */
-    static function merge ($array1, $array2)
-    {
-    	$merged = $array1;
-    
-    	if (is_array($array2) || $array2 instanceof ArrayIterator)
-    	{
-	    	foreach ($array2 as $key => &$value)
-	    	{
-	    		if (is_array($value) && is_array($merged[$key]))
-	    		{
-	    			$merged[$key] = self::merge($merged[$key], $value);
-	    		}
-	    		elseif (isset($value) && !is_array($merged[$key]))
-	    		{
-	    			$merged[$key] = $value;
-	    		}
-	    	}
-    	}
-    
-    	return $merged;
-    }
+		return $yml;
+	}
+	
+	/**
+	 * Merge config arrays recursively using distinct keys.
+	 *
+	 * @param {array} $config1 Array to start with
+	 * @param {array} $config2 Array to merge with
+	 * @return {array} Config combined
+	 */
+	static function merge ($array1, $array2)
+	{
+		$merged = $array1;
+	
+		if (is_array($array2) || $array2 instanceof ArrayIterator)
+		{
+			foreach ($array2 as $key => &$value)
+			{
+				if (is_array($value) && is_array($merged[$key]))
+				{
+					$merged[$key] = self::merge($merged[$key], $value);
+				}
+				elseif (isset($value) && !is_array($merged[$key]))
+				{
+					$merged[$key] = $value;
+				}
+			}
+		}
+	
+		return $merged;
+	}
 }
 
 

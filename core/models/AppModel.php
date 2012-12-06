@@ -281,8 +281,8 @@ class AppModel extends Model
 					// Limit types.
 					'allowed_types' => array(
 						'image/jpeg',
-	    				'image/gif',
-	    				'image/png'
+						'image/gif',
+						'image/png'
 					)
 				));
 			}
