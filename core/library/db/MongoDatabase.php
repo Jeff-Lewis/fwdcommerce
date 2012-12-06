@@ -151,10 +151,22 @@ class MongoDatabase extends Database
 			$result = $this->dbh->command(array(
 				'findandmodify' => 'auto_increments',
 				'query' => array('_id' => $this->collection),
-				'update' => array('$inc' => array("{$this->auto_increment}" => $this->auto_increment_start ?: 1)),
+				'update' => array('$inc' => array("{$this->auto_increment}" => 1)),
 				'upsert' => true,
 				'new' => true
 			));
+			
+			// Is it lower than start value? Then increment to start.
+			if ($result['value'][$this->auto_increment] < $this->auto_increment_start)
+			{
+				$result = $this->dbh->command(array(
+					'findandmodify' => 'auto_increments',
+					'query' => array('_id' => $this->collection),
+					'update' => array('$inc' => array("{$this->auto_increment}" => $this->auto_increment_start-1)),
+					'upsert' => true,
+					'new' => true
+				));
+			}
 			
 			// Prepend auto increment field.
 			$values = array("{$this->auto_increment}" => $result['value'][$this->auto_increment]) + $values;
