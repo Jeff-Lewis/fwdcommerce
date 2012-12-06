@@ -71,11 +71,11 @@ abstract class Database
 		return $adapter;
 	}
 	
-    /**
-     * Prepare field list.
-     */
-    static function prepare_fields ($fields)
-    {
+	/**
+	 * Prepare field list.
+	 */
+	static function prepare_fields ($fields)
+	{
 		if ($fields)
 		{
 			if (is_string($fields))

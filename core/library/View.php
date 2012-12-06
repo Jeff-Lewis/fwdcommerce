@@ -26,7 +26,7 @@ class View
 		$this->path = $params['path'];
 		$this->name = $params['name'];
 
-    	// Init smarty.
+		// Init smarty.
 		if (!self::$smarty)
 		{
 			// Extend smarty package.
@@ -228,9 +228,9 @@ class View
 			$params = View::parse_args($args, array(
 				'tags' => array('view')
 			));
-	        
-	        return '<?php render('.View::serialize_php($params).') ?>'
-	        	.'<?php if (isset($GLOBALS[\'__view_result\'])) { return; } ?>';
+			
+			return '<?php render('.View::serialize_php($params).') ?>'
+				.'<?php if (isset($GLOBALS[\'__view_result\'])) { return; } ?>';
 		});
 		
 		// Extend helper. It's like render with no output.
@@ -241,7 +241,7 @@ class View
 			));
 			
 			return '<?php ob_start(); render('.View::serialize_php($params).'); ob_end_clean(); ?>'
-	        	.'<?php if (isset($GLOBALS[\'__view_result\'])) { return; } ?>';
+				.'<?php if (isset($GLOBALS[\'__view_result\'])) { return; } ?>';
 		});
 				
 		// Args helper.
@@ -257,8 +257,8 @@ class View
 					$params[$key] = str_replace(']->value', '', $params[$key]);
 				}
 			}
-	        
-	        return '<?php args('.View::serialize_php($params).', $_smarty_tpl) ?>';
+			
+			return '<?php args('.View::serialize_php($params).', $_smarty_tpl) ?>';
 		});
 				
 		// Redirect helper.
@@ -267,8 +267,8 @@ class View
 			$params = View::parse_args($args, array(
 				'tags' => array('url')
 			));
-	        
-	        return '<?php redirect('.View::serialize_php($params).') ?>';
+			
+			return '<?php redirect('.View::serialize_php($params).') ?>';
 		});
 		
 		// GET helper.
@@ -277,7 +277,7 @@ class View
 			$params = View::parse_args($args, array(
 				'tags' => array('result', 'from', 'resource', 'data')
 			));
-	        
+			
 			// Params
 			$resource = $params['resource'];
 			$result = $params['result'];
@@ -304,7 +304,7 @@ class View
 			$params = View::parse_args($args, array(
 				'tags' => array('data', 'in', 'resource', 'result')
 			));
-	        
+			
 			// Params
 			$resource = $params['resource'];
 			$result = $params['result'];
@@ -331,7 +331,7 @@ class View
 			$params = View::parse_args($args, array(
 				'tags' => array('data', 'in', 'resource', 'result')
 			));
-	        
+			
 			// Params
 			$resource = $params['resource'];
 			$result = $params['result'];
@@ -358,7 +358,7 @@ class View
 			$params = View::parse_args($args, array(
 				'tags' => array('resource', 'result')
 			));
-	        
+			
 			// Params
 			$resource = $params['resource'];
 			$result = $params['result'];
@@ -398,36 +398,36 @@ class View
 	 */
 	function parse_args ($args, $options = null)
 	{
-        $params = array();
-    	$tagged = 0;
-    	$count = 0;
-        foreach ((array)$args as $key => $val)
-        {
-        	
-    		if (is_numeric($key))
-    		{
-    			
-    			// Flag?
-    			if (($flag = preg_replace('/[^a-z0-9\_\-\.]/i', '', $val)) && in_array($flag, (array)$options['flags']))
-    			{
-    				$key = $flag;
-    				$val = $val[0] == "!" ? false : true;
-    			}
-    			// Short tag.
-    			else if ($options['tags'][$tagged])
-    			{
-    				$key = $options['tags'][$tagged++];
-    			}
-    			else
-    			{
-    				$key = $count++;
-    			}
-    		}
-    		
-    		$params[$key] = $val;
-        }
-        
-        return $params;
+		$params = array();
+		$tagged = 0;
+		$count = 0;
+		foreach ((array)$args as $key => $val)
+		{
+			
+			if (is_numeric($key))
+			{
+				
+				// Flag?
+				if (($flag = preg_replace('/[^a-z0-9\_\-\.]/i', '', $val)) && in_array($flag, (array)$options['flags']))
+				{
+					$key = $flag;
+					$val = $val[0] == "!" ? false : true;
+				}
+				// Short tag.
+				else if ($options['tags'][$tagged])
+				{
+					$key = $options['tags'][$tagged++];
+				}
+				else
+				{
+					$key = $count++;
+				}
+			}
+			
+			$params[$key] = $val;
+		}
+		
+		return $params;
 	}
 
 	/**

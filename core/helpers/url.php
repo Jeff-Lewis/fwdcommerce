@@ -10,7 +10,7 @@
  */
 function url ($params)
 {
-    // Controller path and name.
+	// Controller path and name.
 	$controller_path = Request::$controller->request->path;
 	$controller_name = Request::$controller->request->controller;
 
@@ -84,5 +84,5 @@ function url ($params)
 		}
 	}
 
-    return $path;
+	return $path;
 }

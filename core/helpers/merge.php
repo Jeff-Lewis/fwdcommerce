@@ -13,17 +13,17 @@ function merge ($set1, $set2)
 
 	if (is_array($set2) || $set2 instanceof ArrayIterator)
 	{
-    	foreach ($set2 as $key => &$value)
-    	{
-    		if ((is_array($value) || $value instanceof ArrayIterator) && (is_array($merged[$key]) || $merged[$key] instanceof ArrayIterator))
-    		{
-    			$merged[$key] = merge($merged[$key], $value);
-    		}
-    		elseif (isset($value) && !(is_array($merged[$key]) || $merged[$key] instanceof ArrayIterator))
-    		{
-    			$merged[$key] = $value;
-    		}
-    	}
+		foreach ($set2 as $key => &$value)
+		{
+			if ((is_array($value) || $value instanceof ArrayIterator) && (is_array($merged[$key]) || $merged[$key] instanceof ArrayIterator))
+			{
+				$merged[$key] = merge($merged[$key], $value);
+			}
+			elseif (isset($value) && !(is_array($merged[$key]) || $merged[$key] instanceof ArrayIterator))
+			{
+				$merged[$key] = $value;
+			}
+		}
 	}
 
 	return $merged;

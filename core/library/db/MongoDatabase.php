@@ -53,10 +53,10 @@ class MongoDatabase extends Database
 		$this->connect();
 	}
 
-    /**
-     * Connect to the Mongo database.
-     */
-    function connect ()
+	/**
+	 * Connect to the Mongo database.
+	 */
+	function connect ()
 	{
 		/*
 		Parse config->mongo for connection params.
@@ -138,7 +138,7 @@ class MongoDatabase extends Database
 		
 		// Ensure indexes.
 		$this->ensure_indexes($this->indexes);
-    }
+	}
 
 	/**
 	 * Insert a record.
@@ -668,6 +668,6 @@ class MongoDatabase extends Database
 			$message = "Mongo: {$message}";
 		}
 		
-        throw new Exception($message);
+		throw new Exception($message);
 	}
 }

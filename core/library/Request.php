@@ -765,23 +765,23 @@ class Request extends ArrayInterface
  */
 class ArrayInterface extends ArrayIterator
 {
-    function & __get ($key)
-    {
-    	$result =& $this[$key];
-    	return $result;
-    }
-    
-    function __set ($key, $val)
-    {
-    	return parent::offsetSet($key, $val);
-    }
-    
-    function offsetSet ($key, $val)
-    {
-    	parent::offsetSet($key, $val);
-    	$this->$key = $val;
-    }
-    
+	function & __get ($key)
+	{
+		$result =& $this[$key];
+		return $result;
+	}
+	
+	function __set ($key, $val)
+	{
+		return parent::offsetSet($key, $val);
+	}
+	
+	function offsetSet ($key, $val)
+	{
+		parent::offsetSet($key, $val);
+		$this->$key = $val;
+	}
+	
 	function dump ($return = false)
 	{
 		return print_r($this->getArrayCopy(), $return);

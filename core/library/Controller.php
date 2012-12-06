@@ -8,15 +8,15 @@
  */
 class Controller {
 
-    public $request;
-    public $params;
-    public $session;
-    public $cache;
+	public $request;
+	public $params;
+	public $session;
+	public $cache;
 	public $view;
-    
-    // Default controller options.
-    public $default_layout;
-    public $default_view;
+	
+	// Default controller options.
+	public $default_layout;
+	public $default_view;
 
 	/**
 	 * Constructor.
@@ -26,8 +26,8 @@ class Controller {
 		// Reference app config.
 		$this->config = $this->config ?: Request::$config;
 
-        // Access request wrapper.
-        $this->request = $this->request ?: new Request(array(
+		// Access request wrapper.
+		$this->request = $this->request ?: new Request(array(
 			'domain' => $route['domain'],
 			'path' => $route['path'],
 			'controller' => $route['controller'],
@@ -56,49 +56,49 @@ class Controller {
 		// Attach files to params.
 		$this->params['_files'] = $_FILES;
 
-        // Access cache wrapper.
-        $this->cache = $this->Cache = ($this->cache ?: new Cache);
+		// Access cache wrapper.
+		$this->cache = $this->Cache = ($this->cache ?: new Cache);
 
-        // Access session wrapper.
-        $this->session = $this->Session = ($this->session ?: new Session($this->config->session));
+		// Access session wrapper.
+		$this->session = $this->Session = ($this->session ?: new Session($this->config->session));
 
 		// Create view with path data.
 		$this->view = $this->view ?: new View(array(
 			'path' => $route['path'],
 			'name' => $route['controller']
 		));
-        
-        // Restore messages.
-        $this->restore_messages();
-    }
-    
+		
+		// Restore messages.
+		$this->restore_messages();
+	}
+	
 	/**
 	 * Auto load models as they are requested by the controller.
 	 */
-    function __get ($name)
-    {
-    	if (empty($name))
-    	{
-    		return null;
-    	}
-    	
-    	// Auto-load class instances.
-    	if (in_array($name, (array)Request::$available_models) || get_parent_class($name) == 'Model')
-    	{
+	function __get ($name)
+	{
+		if (empty($name))
+		{
+			return null;
+		}
+		
+		// Auto-load class instances.
+		if (in_array($name, (array)Request::$available_models) || get_parent_class($name) == 'Model')
+		{
 			if (!$this->{$name})
 			{
-    			$this->{$name} = new $name;
-    			
+				$this->{$name} = new $name;
+				
 				if (!in_array($name, (array)$this->request->models))
 				{
 					$this->request->models[] = $name;
 				}
 			}
-    	}
-    	
-    	return $this->{$name};
-    }
-    
+		}
+		
+		return $this->{$name};
+	}
+	
 	/**
 	 * Native REST call.
 	 */
@@ -302,36 +302,36 @@ class Controller {
 		return $view;
 	}
 
-    /**
-     * Set the view layout.
-     */
-    function set_layout ($layout)
-    {
-        $this->request->layout = $layout;
-    }
+	/**
+	 * Set the view layout.
+	 */
+	function set_layout ($layout)
+	{
+		$this->request->layout = $layout;
+	}
 
-    /**
-     * Get the view layout.
-     */
-    function get_layout ()
-    {
-        return $this->request->layout;
-    }
+	/**
+	 * Get the view layout.
+	 */
+	function get_layout ()
+	{
+		return $this->request->layout;
+	}
 
-    /**
-     * Redirect app url.
-     */
-    function redirect ($location = '/')
-    {
-        if (is_array($location))
-        {
-            $location = url($location);
-        }
-        
-        if (!$location = trigger('controller', 'redirect', $location))
-        {
-        	return false;
-        }
+	/**
+	 * Redirect app url.
+	 */
+	function redirect ($location = '/')
+	{
+		if (is_array($location))
+		{
+			$location = url($location);
+		}
+		
+		if (!$location = trigger('controller', 'redirect', $location))
+		{
+			return false;
+		}
 
 		Request::$controller->preserve_messages();
 
@@ -340,23 +340,23 @@ class Controller {
 			$location .= (strpos($location, '?') === false ? '?__ajax' : '&__ajax');
 		}
 
-        header("Location: {$location}");
+		header("Location: {$location}");
 		exit;
-    }
+	}
 
 	/**
 	 * Presere all messages in session.
 	 */
 	function preserve_messages ()
 	{
-        if ($this->messages_exist())
-        {
-            $this->session->_preserved_messages = array(
-            	'errors' => $this->request->errors,
-            	'warnings' => $this->request->warnings,
-            	'notices' => $this->request->notices,
-            );
-        }
+		if ($this->messages_exist())
+		{
+			$this->session->_preserved_messages = array(
+				'errors' => $this->request->errors,
+				'warnings' => $this->request->warnings,
+				'notices' => $this->request->notices,
+			);
+		}
 
 		foreach ((array)$this->request->models as $model)
 		{
@@ -372,25 +372,25 @@ class Controller {
 	 */
 	function restore_messages ()
 	{
-        if ($this->session->_preserved_messages)
-        {
-            foreach ($this->session->_preserved_messages as $type => $messages)
-            {
-                $this->set_message($messages, $type);
-            }
+		if ($this->session->_preserved_messages)
+		{
+			foreach ($this->session->_preserved_messages as $type => $messages)
+			{
+				$this->set_message($messages, $type);
+			}
 
-            $this->session->_preserved_messages = null;
-        }
+			$this->session->_preserved_messages = null;
+		}
 
-        if ($this->session->_preserved_model_errors)
-        {
-            foreach ($this->session->_preserved_model_errors as $model => $errors)
-            {
-                $this->$model->errors = $errors;
-            }
+		if ($this->session->_preserved_model_errors)
+		{
+			foreach ($this->session->_preserved_model_errors as $model => $errors)
+			{
+				$this->$model->errors = $errors;
+			}
 
-            $this->session->_preserved_model_errors = null;
-        }
+			$this->session->_preserved_model_errors = null;
+		}
 	}
 	
 	/**
@@ -528,91 +528,91 @@ class Controller {
 		$output = ob_get_contents();
 		ob_end_clean();
 
-        if ($print)
-        {
-            print $output;
-        }
-        
-        return $output;
+		if ($print)
+		{
+			print $output;
+		}
+		
+		return $output;
 	}
 
-    /**
-     * Set page notice message(s).
-     */
-    function notice ($notice = 'Unknown notice', $redirect = null)
-    {
-        Request::$controller->set_message($notice, 'notices', $redirect);
+	/**
+	 * Set page notice message(s).
+	 */
+	function notice ($notice = 'Unknown notice', $redirect = null)
+	{
+		Request::$controller->set_message($notice, 'notices', $redirect);
 
-        return;
-    }
+		return;
+	}
 
-    /**
-     * Set page warning message(s).
-     */
-    function warn ($warn = 'Unknown warning', $redirect = null)
-    {
-        Request::$controller->set_message($warn, 'warnings', $redirect);
+	/**
+	 * Set page warning message(s).
+	 */
+	function warn ($warn = 'Unknown warning', $redirect = null)
+	{
+		Request::$controller->set_message($warn, 'warnings', $redirect);
 
-        return;
-    }
+		return;
+	}
 
-    /**
-     * Set page error message(s).
-     */
-    function error ($error = 'Unknown error', $redirect = null)
-    {
-        Request::$controller->set_message($error, 'errors', $redirect);
+	/**
+	 * Set page error message(s).
+	 */
+	function error ($error = 'Unknown error', $redirect = null)
+	{
+		Request::$controller->set_message($error, 'errors', $redirect);
 
-        return;
-    }
+		return;
+	}
 
-    /**
-     * Set page message(s) of any severity.
-     */
-    function set_message ($message, $type, $redirect = null)
-    {
-    	// Make sure type is valid.
-    	if (!in_array($type, array('notices', 'warnings', 'errors')))
-    	{
-    		return false;
-    	}
+	/**
+	 * Set page message(s) of any severity.
+	 */
+	function set_message ($message, $type, $redirect = null)
+	{
+		// Make sure type is valid.
+		if (!in_array($type, array('notices', 'warnings', 'errors')))
+		{
+			return false;
+		}
 
-        if (is_string($message))
-        {
-            $this->request[$type] = array_merge((array)$this->request[$type], array($message));
-            $this->request->messages[] = $message;
-        }
+		if (is_string($message))
+		{
+			$this->request[$type] = array_merge((array)$this->request[$type], array($message));
+			$this->request->messages[] = $message;
+		}
 
-        if (is_array($message))
-        {
-            $this->request[$type] = array_merge((array)$this->request[$type], $message);
-            $this->request->messages = array_merge((array)$this->request->messages, $message);
-        }
+		if (is_array($message))
+		{
+			$this->request[$type] = array_merge((array)$this->request[$type], $message);
+			$this->request->messages = array_merge((array)$this->request->messages, $message);
+		}
 
-        if ($redirect)
-        {
-            $this->redirect($redirect);
-        }
+		if ($redirect)
+		{
+			$this->redirect($redirect);
+		}
 
-        return;
-    }
+		return;
+	}
 
-    /**
-     * Boolean check for existing page messages.
-     */
-    function messages_exist ()
-    {
-        return (count($this->request->messages)
-        		|| count($this->request->notices)
-        		|| count($this->request->warnings)
-        		|| count($this->request->errors)) ? true : false;
-    }
+	/**
+	 * Boolean check for existing page messages.
+	 */
+	function messages_exist ()
+	{
+		return (count($this->request->messages)
+				|| count($this->request->notices)
+				|| count($this->request->warnings)
+				|| count($this->request->errors)) ? true : false;
+	}
 
-    /**
-     * Check for existing errors, and optionally related model errors.
-     */
-    function errors_exist ($related = true)
-    {
+	/**
+	 * Check for existing errors, and optionally related model errors.
+	 */
+	function errors_exist ($related = true)
+	{
 		if ($related)
 		{
 			foreach ((array)$this->request->models as $model)
@@ -624,33 +624,33 @@ class Controller {
 			}
 		}
 
-        return count($this->request->errors) ? true : false;
-    }
+		return count($this->request->errors) ? true : false;
+	}
 
-    /**
-     * Clear all existing messages, and optionally all related model errors.
-     */
-    public function clear_messages ($related = false)
-    {
-        $this->request->messages = array();
-        $this->request->notices = array();
-        $this->request->warnings = array();
-        $this->request->errors = array();
+	/**
+	 * Clear all existing messages, and optionally all related model errors.
+	 */
+	public function clear_messages ($related = false)
+	{
+		$this->request->messages = array();
+		$this->request->notices = array();
+		$this->request->warnings = array();
+		$this->request->errors = array();
 
 		if ($related)
 		{
 			$this->clear_errors($related);
 		}
 
-        return;
-    }
+		return;
+	}
 
-    /**
-     * Clear all existing errors, and optionally all related model errors.
-     */
-    public function clear_errors ($related = false)
-    {
-        $this->request->errors = array();
+	/**
+	 * Clear all existing errors, and optionally all related model errors.
+	 */
+	public function clear_errors ($related = false)
+	{
+		$this->request->errors = array();
 
 		if ($related)
 		{
@@ -663,9 +663,9 @@ class Controller {
 			}
 		}
 
-        return;
-    }
-    
+		return;
+	}
+	
 	/**
 	 * Default error handler.
 	 */
@@ -769,30 +769,30 @@ class Controller {
 		return true;
 	}
 
-    /**
-     * Parse a controller string into parts (name, class, path).
-     */
-    static function get_parts ($controller, $path)
-    {
-    	$result = array();
-    	
-    	$parts = explode('/', $controller);
-    	if (!$result['name'] = array_pop($parts))
-    	{
-    		$result['name'] = Request::$config->app['default_controller'];
-    	}
-    	
-    	$result['class'] = camelize($result['name']).'Controller';
-    	
-    	$result['path'] = (!$parts || $parts[0]) ? $path.array_shift($parts) : '/';
-    	foreach ($parts as $part)
-    	{
-    		if ($part)
-    		{
-    			$result['path'] .= "{$part}/";
-    		}
-    	}
-    
-    	return $result;
-    }
+	/**
+	 * Parse a controller string into parts (name, class, path).
+	 */
+	static function get_parts ($controller, $path)
+	{
+		$result = array();
+		
+		$parts = explode('/', $controller);
+		if (!$result['name'] = array_pop($parts))
+		{
+			$result['name'] = Request::$config->app['default_controller'];
+		}
+		
+		$result['class'] = camelize($result['name']).'Controller';
+		
+		$result['path'] = (!$parts || $parts[0]) ? $path.array_shift($parts) : '/';
+		foreach ($parts as $part)
+		{
+			if ($part)
+			{
+				$result['path'] .= "{$part}/";
+			}
+		}
+	
+		return $result;
+	}
 }
