@@ -1,4 +1,12 @@
-# App config
+#
+# This is a local environment config file.
+# Its purpose is to override config options in app.yml
+# with settings specific to this application environment -- 
+# (i.e. dev, test, production).
+#
+# If you prefer to use a single config file, feel free
+# move these options to app.yml and remove this.
+#
 app:
   debug: true
 
@@ -9,8 +17,6 @@ mongo:
   host: 
   port: 
   database: 
-  options:
-  #  replicaSet: rs0
 
 # Cache config
 cache:
