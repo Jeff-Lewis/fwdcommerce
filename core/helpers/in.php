@@ -1,6 +1,6 @@
 <?php
 /**
- * Determine is value A is contained in value B.
+ * Determine if value A is contained in value B.
  *
  *		Usage example:
  *			{$values = [a, b, c]}

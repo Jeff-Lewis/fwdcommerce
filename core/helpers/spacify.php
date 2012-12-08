@@ -3,7 +3,7 @@
  * Spacify a string.
  *
  *		Usage example:
- *			{"long-name-for-example"|camelize} # Long Name For Example
+ *			{"long-name-for-example"|spacify} # Long Name For Example
  */
 function spacify ($params)
 {

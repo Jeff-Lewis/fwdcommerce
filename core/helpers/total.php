@@ -1,7 +1,7 @@
 <?php
 /**
  * Format a total value as a string with precision.
- * To format localized money strings, use money() instead.
+ * To format a localized money string, use money() instead.
  *
  * 		Usage example:
  *			{$price = 10}

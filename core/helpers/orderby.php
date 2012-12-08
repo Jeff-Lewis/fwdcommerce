@@ -1,7 +1,7 @@
 <?php
 /**
  * Order an array by index.
- * Default ascending. Prefix with "!" for descensing.
+ * Default ascending. Prefix with "!" for descending.
  *
  * 		Usage example:
  *			{foreach $users|orderby:"name" as $user}

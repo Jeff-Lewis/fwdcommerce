@@ -3,7 +3,7 @@
  * Hyphenate a string.
  * 
  *		Usage example:
- *			{"Long Name For Example"|camelize} # long-name-for-example
+ *			{"Long Name For Example"|hyphenate} # long-name-for-example
  */
 function hyphenate ($params)
 {
