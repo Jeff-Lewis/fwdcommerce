@@ -3,7 +3,7 @@
  * Underscore a string.
  * 
  *		Usage example:
- *			{"LongNameForExample"|camelize} # long_name_for_example
+ *			{"LongNameForExample"|underscore} # long_name_for_example
  */
 function underscore ($params)
 {

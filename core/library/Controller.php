@@ -453,7 +453,7 @@ class Controller {
 					ob_get_clean();
 				}
 				// Returned status code?
-				elseif ($result && is_int($result))
+				elseif (is_int($result) && $result >= 200)
 				{
 					$content = ob_get_clean();
 					header('HTTP/1.1 '.($result));
