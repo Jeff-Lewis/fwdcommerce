@@ -680,7 +680,6 @@ Aliquam erat volutpat. Morbi eget velit odio, vel aliquam tellus. Cras sem arcu,
 						{if !get("/products")}
 							{foreach $products as $product}
 								{put $product in "/products/{$product.slug}"}
-								{*{put [image] in "/products/{$product.slug}/images"}*}
 							{/foreach}
 						{/if}
 
