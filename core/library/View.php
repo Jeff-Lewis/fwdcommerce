@@ -26,23 +26,25 @@ class View
 		$this->path = $params['path'];
 		$this->name = $params['name'];
 
-		// Init smarty.
-		if (!self::$smarty)
+		// Already initialized?
+		if (self::$smarty)
 		{
-			// Extend smarty package.
-			if (!defined('SMARTY_DIR'))
-			{
-				define('SMARTY_DIR', APP_ROOT.'core/library/smarty/libs/');
-				require(APP_ROOT.'core/library/smarty/libs/Smarty.class.php');
-			}
-			
-			self::$smarty = new Smarty;
-			self::$smarty->setCacheDir(APP_ROOT.'core/cache/');
-			self::$smarty->setCompileDir(APP_ROOT.'core/cache/');
-			self::$smarty->setConfigDir(APP_ROOT.'core/library/smarty/config/');
-			self::$smarty->force_compile = Request::$config->smarty['force_compile'] ? true : false;
-			self::$smarty->caching = Request::$config->smarty['caching'] ? true : false;
+			return;
 		}
+		
+		// Extend smarty package.
+		if (!defined('SMARTY_DIR'))
+		{
+			define('SMARTY_DIR', APP_ROOT.'core/library/smarty/libs/');
+			require(APP_ROOT.'core/library/smarty/libs/Smarty.class.php');
+		}
+		
+		self::$smarty = new Smarty;
+		self::$smarty->setCacheDir(APP_ROOT.'core/cache/');
+		self::$smarty->setCompileDir(APP_ROOT.'core/cache/');
+		self::$smarty->setConfigDir(APP_ROOT.'core/library/smarty/config/');
+		self::$smarty->force_compile = Request::$config->smarty['force_compile'] ? true : false;
+		self::$smarty->caching = Request::$config->smarty['caching'] ? true : false;
 
 		// Init helpers.
 		foreach ((array)Request::$available_helpers as $helper)
