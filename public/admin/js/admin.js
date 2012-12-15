@@ -472,9 +472,18 @@ if (!window.liveBehaviorsRun)
 	// View form submit.
 	$('#view form').live('submit', function ()
 	{
+		// Already submitting?
+		if ($(this).data('submitting'))
+		{
+			return false;
+		}
+		
 		if (!$(this).hasClass('noview'))
 		{
+			$(this).data('submitting', true);
+			
 			$('#view').trigger('load', [$(this).attr('action'), $(this).serializeObject()]);
+			
 			return false;
 		}
 	});
