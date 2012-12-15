@@ -573,7 +573,6 @@ form .field.images {
 }
 form .field .image {
 	position: relative;
-	display: table-cell;
 	vertical-align: middle;
 	overflow: hidden;
 	width: 190px;
