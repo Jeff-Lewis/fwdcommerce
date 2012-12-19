@@ -77,7 +77,7 @@ class Request extends ArrayInterface
 		ob_start();
 		
 		// Set error reporting level.
-		error_reporting(E_ALL ^ E_NOTICE);
+		error_reporting(E_ERROR | E_WARNING | E_PARSE);
 		
 		// Setup default error handelers.
 		set_error_handler(array('Request', 'default_error_handler'), E_ALL);
