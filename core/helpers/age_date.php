@@ -22,12 +22,13 @@ function age_date ($params)
 		return age($date);
 	}
 	
-	if (date('Y') == date('Y', $time))
+	// Within 1 year?
+	if ($time >= time() - 31536000)
 	{
 		return date('M j', $time);
 	}
 	else
 	{
-		return date('M j Y', $time);
+		return date('M j, Y', $time);
 	}
 }
