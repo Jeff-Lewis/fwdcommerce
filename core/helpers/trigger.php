@@ -52,7 +52,7 @@ function trigger ($target, $event = null)
 					}
 					
 					// Chain result.
-					if (count($args) > 1)
+					if (count($args))
 					{
 						$result = isset($return) ? ($args[0] = $return) : $args[0];
 					}
