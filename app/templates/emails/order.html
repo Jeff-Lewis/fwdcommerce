@@ -76,16 +76,16 @@ E-mail: {$order.email}<br />
 <strong>Shipping: {$order.shipping.method}</strong><br />
 {$order.shipping.address}<br />
 {if $order.shipping.city}{$order.shipping.city},{/if}
-{if $order.shipping.state}{$order.shipping.state}{/if}
-{if $order.shipping.zip}{$order.shipping.zip}{/if}
-{if $order.shipping.country}({$order.shipping.country}){/if}<br />
+{if $order.shipping.state} {$order.shipping.state}{/if}
+{if $order.shipping.zip} {$order.shipping.zip}{/if}
+{if $order.shipping.country} ({$order.shipping.country}){/if}<br />
 <br />
 <strong>Billing: {if $order.billing.method == "card"}{$order.billing.card.type} {$order.billing.card.last4}{else}{$order.billing.method|ucfirst}{/if}</strong><br />
 {$order.billing.address}<br />
 {if $order.billing.city}{$order.billing.city},{/if}
-{if $order.billing.state}{$order.billing.state}{/if}
-{if $order.billing.zip}{$order.billing.zip}{/if}
-{if $order.billing.country}({$order.billing.country}){/if}<br />
+{if $order.billing.state} {$order.billing.state}{/if}
+{if $order.billing.zip} {$order.billing.zip}{/if}
+{if $order.billing.country} ({$order.billing.country}){/if}<br />
 <br />
 </p>
 </body>
