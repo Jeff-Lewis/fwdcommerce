@@ -57,7 +57,7 @@
 		{
 			if (url)
 			{
-				$('#search').attr('action', url);
+				url = $('#search').attr('action') + url;
 				$form = $('<form method="get" action="'+url+'"><input type="hidden" name="search" value="'+$input.val()+'" /></form>');
 				$form.appendTo('body').trigger('submit')
 				return true;
