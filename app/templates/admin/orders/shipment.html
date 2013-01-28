@@ -160,7 +160,7 @@
 		<div class="view-footer actions">
 			<button type="submit" class="btn btn-primary">Save shipment</button>
 			{if $shipment.id}
-				<button type="submit" class="btn btn-success print" data-href="/orders/print/{$order.id}/shipments/{$shipment_id}">Print receipt</button>
+				<button type="submit" class="btn btn-success print" data-href="/shipments/print/{$shipment.id}">Print receipt</button>
 			{/if}
 			<button type="button" class="btn view-back">Back</button>
 			
@@ -194,11 +194,13 @@
 			});
 		});
 		
+		var print_href = $(this).data('href');
+		
 		// Wait half a second to save, then go to print url.
 		setTimeout(function ()
 		{
 			$('#view').trigger('loading', [false]);
-			window.open("/shipments/print/{$shipment.id}", "print_shipment");
+			window.open(print_href, "print_shipment");
 			
 		}, 500);
 		
