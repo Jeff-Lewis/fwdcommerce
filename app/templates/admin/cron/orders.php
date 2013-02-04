@@ -7,7 +7,6 @@
 // Get ready / scheduled / recurring orders.
 $recurring_orders = get("/orders", array(
 	'where' => array(
-		'status' => "ready",
 		'schedule' => array('$ne' => null),
 		'next_id' => null
 	)
@@ -15,7 +14,7 @@ $recurring_orders = get("/orders", array(
 foreach ((array)$recurring_orders as $order)
 {
 	// Must be ready.
-	if ($order['status'] != 'ready')
+	if ($order['status'] == 'pending')
 	{
 		continue;
 	}
