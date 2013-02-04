@@ -199,6 +199,9 @@ class Orders extends AppModel
 					// Unset certain properties.
 					unset($order['date_created']);
 					unset($order['date_updated']);
+					unset($order['date_shipped']);
+					unset($order['date_returned']);
+					unset($order['date_cancelled']);
 					unset($order['date_scheduled']);
 					unset($order['next_id']);
 					unset($order['_id']);
