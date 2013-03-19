@@ -14,7 +14,7 @@ $recurring_orders = get("/orders", array(
 foreach ((array)$recurring_orders as $order)
 {
 	// Must be ready.
-	if ($order['status'] == 'pending')
+	if ($order['status'] != 'ready' && $order['status'] != 'shipped')
 	{
 		continue;
 	}
