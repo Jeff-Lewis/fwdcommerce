@@ -1,13 +1,5 @@
 {extend "admin"}
 
-{$query = [
-	search => $params.search,
-	where => $params.where,
-	page => $params.page
-]}
-
-{get $trash from "/trash" $query}
-
 {foreach $trash as $doc}
 	<li>
 		<div class="headline">

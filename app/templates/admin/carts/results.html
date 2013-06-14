@@ -1,13 +1,5 @@
 {extend "admin"}
 
-{$query = [
-	search => $params.search,
-	where => $params.where,
-	page => $params.page
-]}
-
-{get $carts from "/carts" $query}
-
 {foreach $carts as $cart}
 	<li>
 		<span class="image count{if $cart.items|count <= 4}{$cart.items|count}{else}4{/if}">

@@ -1,14 +1,22 @@
 {extend "admin"}
 
+{$query = [
+	search => $params.search,
+	where => $params.where,
+	page => $params.page
+]}
+
+{get $accounts from "/accounts" $query}
+
 <div class="list-container">
 	<div class="list-header well">
 		{$actions = [all => [where => []]]}
 		{foreach get("/settings/roles") as $role => $perms}
 			{$actions[$role|pluralize] = [where => [roles => $role]]}
 		{/foreach}
-		{render "search" for="accounts" action=$params.action actions=$actions}
+		{render "search" for="accounts" action=$params.action actions=$actions count=$accounts.count}
 	</div>
 	<ul class="list-results">
-		{render "accounts/results"}
+		{render "accounts/results" accounts=$accounts}
 	</ul>
 </div>

@@ -3,6 +3,15 @@
 {args $channel_slug}
 {get $channel from "/channels/$channel_slug"}
 
+{$query = [
+	channel_id => $channel.id,
+	search => $params.search,
+	where => $params.where,
+	page => $params.page
+]}
+
+{get $entries from "/entries" $query}
+
 <div class="list-container">
 	<div class="list-header well">
 		{if $channel.fields_by_id.categories.type == select}
@@ -17,9 +26,9 @@
 				{$actions[$key] = [where => ["{$action_field}" => $key]]}
 			{/foreach}
 		{/if}
-		{render "search" for="entries" name=$channel_slug|spacify|lower action=$params.action actions=$actions}
+		{render "search" for="entries" name=$channel_slug|spacify|lower action=$params.action actions=$actions count=$entries.count}
 	</div>
 	<ul class="list-results">
-		{render "entries/results" channel=$channel}
+		{render "entries/results" channel=$channel entries=$entries}
 	</ul>
 </div>

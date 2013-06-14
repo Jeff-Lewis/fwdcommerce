@@ -1,14 +1,6 @@
 {extend "admin"}
 
-{$query = [
-	search => $params.search,
-	where => $params.where,
-	page => $params.page
-]}
-
-{get $channels from "/channels" $query}
-
-{foreach $channels as $channel}
+{foreach $results as $channel}
 	<li>
 		<div class="headline">
 			<a class="list-item" href="/channels/entry/{$channel.id}" id="item_channels_{$channel.id}"> 
@@ -36,4 +28,4 @@
 	<li class="empty">No channels found</li>
 {/foreach}
 
-{render "loadmore" with=$channels query=$query url="/channels"}
+{render "loadmore" with=$results query=$query url="/channels"}

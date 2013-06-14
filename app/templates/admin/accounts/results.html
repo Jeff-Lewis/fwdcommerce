@@ -1,13 +1,5 @@
 {extend "admin"}
 
-{$query = [
-	search => $params.search,
-	where => $params.where,
-	page => $params.page
-]}
-
-{get $accounts from "/accounts" $query}
-
 {foreach $accounts as $account}
 	<li>
 		<div class="headline">

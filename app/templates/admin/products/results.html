@@ -1,13 +1,5 @@
 {extend "admin"}
 
-{$query = [
-	search => $params.search,
-	where => $params.where,
-	page => $params.page
-]}
-
-{get $products from "/products" $query}
-
 {foreach $products as $product}
 	<li>
 		<span class="image">

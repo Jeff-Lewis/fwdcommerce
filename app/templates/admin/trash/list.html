@@ -1,10 +1,18 @@
 {extend "admin"}
 
+{$query = [
+	search => $params.search,
+	where => $params.where,
+	page => $params.page
+]}
+
+{get $trash from "/trash" $query}
+
 <div class="list-container">
 	<div class="list-header well">
-		{render "search" for="trash"}
+		{render "search" for="trash" count=$trash.count}
 	</div>
 	<ul class="list-results">
-		{render "trash/results"}
+		{render "trash/results" trash=$trash}
 	</ul>
 </div>

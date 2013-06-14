@@ -1,16 +1,6 @@
 {extend "admin"}
 
 {args $channel_slug}
-{get $channel from "/channels/$channel_slug"}
-
-{$query = [
-	channel_id => $channel.id,
-	search => $params.search,
-	where => $params.where,
-	page => $params.page
-]}
-
-{get $entries from "/entries" $query}
 
 {foreach $entries as $entry}
 	<li>

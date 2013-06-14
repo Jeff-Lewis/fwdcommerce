@@ -1,13 +1,5 @@
 {extend "admin"}
 
-{$query = [
-	search => $params.search,
-	where => $params.where,
-	page => $params.page
-]}
-
-{get $categories from "/categories" $query}
-
 {foreach $categories as $category}
 	<li>
 		<div class="headline">

@@ -1,8 +1,16 @@
 {extend "admin"}
 
+{$query = [
+	search => $params.search,
+	where => $params.where,
+	page => $params.page
+]}
+
+{get $orders from "/orders" $query}
+
 <div class="list-container">
 	<div class="list-header well">
-		{render "search" for="orders" action=$params.action action_limit=false actions=[
+		{render "search" for="orders" action=$params.action action_limit=false count=$orders.count actions=[
 			all => [where => []],
 			pending => [icon => "icon-time", where => [status => "pending"]],
 			ready => [icon => "icon-check", where => [status => "ready"]],
@@ -13,6 +21,6 @@
 		]}
 	</div>
 	<ul class="list-results with-images">
-		{render "orders/results"}
+		{render "orders/results" orders=$orders}
 	</ul>
 </div>

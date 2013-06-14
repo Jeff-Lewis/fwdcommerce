@@ -1,10 +1,18 @@
 {extend "admin"}
 
+{$query = [
+	search => $params.search,
+	where => $params.where,
+	page => $params.page
+]}
+
+{get $results from "/{$for}" $query}
+
 <div class="list-container">
 	<div class="list-header well">
-		{render "search" for=$for name=$name}
+		{render "search" for=$for count=$results.count name=$name}
 	</div>
 	<ul class="list-results">
-		{render "{$for}/results"}
+		{render "{$for}/results" results=$results}
 	</ul>
 </div>

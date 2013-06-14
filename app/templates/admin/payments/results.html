@@ -1,12 +1,5 @@
 {extend "admin"}
 
-{$query = [
-	search => $params.search,
-	where => $params.where,
-	page => $params.page
-]}
-
-{get $payments from "/payments" $query}
 {get $settings from "/settings/payments"}
 
 {foreach $payments as $payment}

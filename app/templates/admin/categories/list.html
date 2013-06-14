@@ -1,10 +1,18 @@
 {extend "admin"}
 
+{$query = [
+	search => $params.search,
+	where => $params.where,
+	page => $params.page
+]}
+
+{get $categories from "/categories" $query}
+
 <div class="list-container">
 	<div class="list-header well">
-		{render "search" for="categories"}
+		{render "search" for="categories" count=$categories.count}
 	</div>
 	<ul class="list-results">
-		{render "categories/results"}
+		{render "categories/results" categories=$categories}
 	</ul>
 </div>
