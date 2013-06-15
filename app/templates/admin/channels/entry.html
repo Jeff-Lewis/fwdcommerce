@@ -1,9 +1,13 @@
 {extend "admin"}
-	
+
+{if $params.channel.search_field_list}
+	{$params.channel.search_fields = preg_split("/[, ]+/", $params.channel.search_field_list)}
+	{$params.channel.search_field_list = null}
+{/if}
+
 {extend "default-entry" for="channels"}
 {$channel = $request.entry}
 {$errors = $request.errors}
-
 
 <div class="view-container">
 	<div class="view-header well">
@@ -16,17 +20,18 @@
 				<div class="row">
 					<div class="field control-group span2">
 						<label>Channel name <span class="error">{$errors.name}</span></label>
-						<input type="text" name="channel[name]" value="{$channel.name}" />
+						<input type="text" name="channel[name]" value="{$channel.name|escape}" />
 					</div>
 					<div class="field control-group span2">
 						<label>Channel slug <span class="error">{$errors.slug}</span></label>
-						<input type="text" name="channel[slug]" value="{$channel.slug|default:$channel.name|hyphenate}" />
+						<input type="text" name="channel[slug]" value="{$channel.slug|default:$channel.name|hyphenate|escape}" />
 					</div>
 				</div>
 				{if $channel.fields}
 					<table class="table table-bordered table-condensed">
 						<tr>
 							<th colspan="2">Channel fields</th>
+							<th>Key</th>
 							<th>Type</th>
 						</tr>
 						{foreach $channel.fields as $field}
@@ -34,21 +39,49 @@
 								<td>#{$field@iteration}</td>
 								<td>
 									<div class="with-actions">
-										{$field.name}
+										{$field.name|escape}
 										<code class="act">
-											<a href="/channels/field/{$channel.id}/fields/{$field@key}" class="view-link">edit</a>
+											<a href="/channels/field/{$channel.id|escape}/fields/{$field@key}" class="view-link">edit</a>
 										</code>
 									</div>
 								</td>
-								<td>{$field.type}</td>
+								<td>{$field.id|escape}</td>
+								<td>{$field.type|escape}</td>
 							</tr>
 						{/foreach}
 					</table>
 				{/if}
+				<div class="row">
+					<div class="field control-group span2">
+						<label>Order by field <span class="error">{$errors.order_field}</span></label>
+						<select name="channel[order_field]">
+							<option value="date_created">Date created</option>
+							<option value="date_updated" {if $channel.order_field == "date_updated"}selected="selected"{/if}>Date updated</option>
+							{foreach $channel.fields as $field}
+								<option value="{$field.id|escape}" {if $channel.order_field == $field.id}selected="selected"{/if}>{$field.name|escape}</option>
+							{/foreach}
+						</select>
+					</div>
+					<div class="field control-group span1">
+						<label>Sort <span class="error">{$errors.order_field}</span></label>
+						<select name="channel[order_dir]">
+							{foreach [DESC, ASC] as $dir}
+								<option value="{$dir}" {if $channel.order_dir == $dir}selected="selected"{/if}>{$dir|lower|ucfirst}</option>
+							{/foreach}
+						</select>
+					</div>
+				</div>
+				<br />
 				<button type="button" class="btn btn-success view-link" data-href="/channels/field/{$channel.id}"><i class="icon-plus-sign icon-white"></i> Add field</button>
 				<br />
 				<br />
 				
+				<div class="row">
+					<div class="field control-group span4">
+						<label>Search fields (Optional, comma separated list) <span class="error">{$errors.search_field_list}</span></label>
+						<input type="text" name="channel[search_field_list]" value="{if $params.channel.search_field_list}{$params.channel.search_field_list}{elseif $channel.search_fields}{$channel.search_fields|implode:", "}{/if}" />
+					</div>
+				</div>
 				<div class="row">
 					<div class="field control-group span4">
 						<label>Preview (Optional, http://example.com/page/:slug/preview) <span class="error">{$errors.preview_url}</span></label>

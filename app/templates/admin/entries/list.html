@@ -3,11 +3,26 @@
 {args $channel_slug}
 {get $channel from "/channels/$channel_slug"}
 
+{if $params.search}
+	{if $channel.search_fields}
+		{$search_params = []}
+		{foreach $channel.search_fields as $field}
+			{$search_params[$field|lower] = $params.search}
+		{/foreach}
+	{else}
+		{$search_params = $params.search}
+	{/if}
+{/if}
+
+{$order_field = $channel.order_field|default:"date_created"}
+{$order_dir = $channel.order_dir|default:"desc"}
+
 {$query = [
 	channel_id => $channel.id,
-	search => $params.search,
+	search => $search_params,
 	where => $params.where,
-	page => $params.page
+	page => $params.page,
+	order => "{$order_field} {$order_dir}"
 ]}
 
 {get $entries from "/entries" $query}

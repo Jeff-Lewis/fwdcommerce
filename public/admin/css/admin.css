@@ -726,13 +726,13 @@ td > label.checkbox {
 	font-weight: bold;
 	text-transform: uppercase;
 	text-shadow: 1px 1px #f3f3f3;
-	color: #999;
+	color: #888;
 }
 #search .clear:hover {
 	text-decoration: none;
 }
 #search .clear:hover .found-count {
-	color: #888;
+	color: #666;
 }
 
 /* alerts */

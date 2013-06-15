@@ -3,7 +3,9 @@
 {* Save query in session *}
 {$query = put("/session/search/$for", $params.search)}
 
-{if !$query}
+{if $query}
+	{$search_hint = $query}
+{else}
 	{if $count}
 		{$search_hint = "{$count} {$name|default:$for}"|pluralize}
 	{else}
@@ -12,7 +14,7 @@
 {/if}
 	
 <form id="search" class="form-search" method="post" action="">
-	<input type="text" class="query input-medium search-query " name="search" value="{$query}" placeholder="{$search_hint}" autocomplete="off" maxlength="50" />
+	<input type="text" class="query input-medium search-query " name="search" value="{$query}" placeholder="{$search_hint|escape}" autocomplete="off" maxlength="50" />
 	{if $query}
 		<a class="clear" href="?search=">
 			<small class="found-count">{$count|default:0} found</small>

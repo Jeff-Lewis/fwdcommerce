@@ -29,7 +29,12 @@
 		</small>
 	</li>
 {foreachelse}
-	<li class="empty">No entries found</li>
+	<li class="empty">
+		No entries found
+		{if $channel.search_fields}
+			with "{$params.search}" in <b>{$channel.search_fields|implode:", "}</b>
+		{/if}
+	</li>
 {/foreach}
 
 {render "loadmore" with=$entries query=$query url="/entries/{$channel_slug}"}
