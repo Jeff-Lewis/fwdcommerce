@@ -21,7 +21,7 @@ function pluralize ($params)
 	}
 
 	// Conditional.
-	if (isset($params['if_many']))
+	if (is_array($params) && isset($params['if_many']))
 	{
 		$if_many = (is_array($params['if_many'])) ? count($params['if_many']) : $params['if_many'];
 	}
