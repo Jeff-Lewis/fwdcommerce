@@ -1,6 +1,6 @@
 {extend "admin"}
 
-{args $channel_slug}
+{$channel_slug = $params.channel|default:$request.args.0}
 
 {foreach $entries as $entry}
 	<li>
@@ -37,4 +37,4 @@
 	</li>
 {/foreach}
 
-{render "loadmore" with=$entries query=$query url="/entries/{$channel_slug}"}
+{render "loadmore" with=$entries query=[channel => $channel_slug] url="/entries"}

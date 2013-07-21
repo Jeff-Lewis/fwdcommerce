@@ -1,6 +1,6 @@
 {extend "admin"}
 
-{args $channel_slug}
+{$channel_slug = $params.channel|default:$request.args.0}
 {get $channel from "/channels/$channel_slug"}
 
 {if $params.search}
