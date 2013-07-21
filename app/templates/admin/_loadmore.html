@@ -4,7 +4,7 @@
 	<li class="loadmore">
 		{$query.page = $with.current+1}
 		<div class="loadmore">
-			<a href="{$url}/results?{$query|http_build_query}">{if $title}{$title}{else}Load More{if $label} {pluralize word=$label|ucfirst if_many=$with.count}{/if}{/if}</a>
+			<a href="{$url}/list?{$query|http_build_query}">{if $title}{$title}{else}Load More{if $label} {pluralize word=$label|ucfirst if_many=$with.count}{/if}{/if}</a>
 		</div>
 	
 		<script type="text/javascript">

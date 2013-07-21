@@ -119,7 +119,7 @@ if (!window.liveBehaviorsRun)
 			// Append loaded results?
 			if (mode == "append")
 			{
-				$list.find('li').each(function ()
+				$list.find('.list-results li').each(function ()
 				{
 					$(this).appendTo($results);
 				});
