@@ -395,7 +395,7 @@
 							}
 							else
 							{
-								$.post(window.view_pages[window.view_index].base, $(this).closest('form').serialize());
+								$.post("{$request.uri}", $(this).closest('form').serialize());
 								$field.attr('disabled', true);
 								$(this).text('edit');
 							}
